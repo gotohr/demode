@@ -1,0 +1,14 @@
+{
+    "name": "gotohr/tools",
+    "description": "",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Ljubo Čanić",
+            "email": "ljubo@goto.hr"
+        }
+    ],
+    "autoload": {
+        "psr-0": {"": "src/"}
+    }
+}
