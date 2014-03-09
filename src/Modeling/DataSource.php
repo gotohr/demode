@@ -1,6 +1,6 @@
 <?php
 
-namespace Gotohr;
+namespace Modeling;
 
 class DataSource {
 
