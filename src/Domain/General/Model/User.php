@@ -1,19 +1,17 @@
 <?php
 
-namespace Domain\General\Entities;
+namespace Domain\General\Model;
 
-use Domain\General\Entities\Person;
-use Domain\General\string;
 use Modeling\Entity;
 use Modeling\Property;
 
 /**
- * @method \Domain\General\Entities\User setUsername($username)
+ * @method \Domain\General\Model\User setUsername($username)
  * @method string getUsername()
- * @method \Domain\General\Entities\User setPassword($password)
+ * @method \Domain\General\Model\User setPassword($password)
  * @method string getPassword()
- * @method \Domain\General\Entities\User setPerson(Person $person)
- * @method \Domain\General\Entities\Person getPerson()
+ * @method \Domain\General\Model\User setPerson(Person $person)
+ * @method \Domain\General\Model\Person getPerson()
  */
 class User extends Entity {
 

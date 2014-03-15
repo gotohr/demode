@@ -2,6 +2,8 @@
 
 namespace Modeling;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 abstract class Entity {
 
     /** @var Properties */ protected $properties;
@@ -27,7 +29,7 @@ abstract class Entity {
     }
 
     /**
-     * @return Properties
+     * @return ArrayCollection
      */
     protected function getProperties() {
         return $this->properties;
@@ -35,7 +37,7 @@ abstract class Entity {
 
     public function __call($name, $args) {
         $propertyName = lcfirst(substr($name, 3));
-        $property = $this->properties->getProperty($propertyName);
+        $property = $this->properties->get($propertyName);
         $prefix = substr($name, 0, 3);
         if ($property) {
             if ($prefix === 'get') {

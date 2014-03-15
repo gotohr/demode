@@ -2,20 +2,16 @@
 
 namespace Modeling;
 
-class Properties {
+use Doctrine\Common\Collections\ArrayCollection;
 
-    /** @var Property[] */ protected $property;
-
-    public function __construct() {
-        $this->property = array();
-    }
+class Properties extends ArrayCollection {
 
     /**
      * @param Property $property
      * @return Properties
      */
-    public function add(Property $property) {
-        $this->setProperty($property->getName(), $property);
+    public function add($property) {
+        $this->set($property->getName(), $property);
         return $this;
     }
 
@@ -24,16 +20,8 @@ class Properties {
      * @param Property $property
      * @return Properties
      */
-    public function setProperty($name, Property $property) {
-        $this->property[$name] = $property;
+    public function set($name, $property) {
+        parent::set($name, $property);
         return $this;
-    }
-
-    /**
-     * @param $name
-     * @return Property
-     */
-    public function getProperty($name) {
-        return $this->property[$name];
     }
 }

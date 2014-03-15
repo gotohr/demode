@@ -1,9 +1,12 @@
 <?php
 
+use Domain\General\Model\Person;
+use Domain\General\Model\User;
+
 class ModelingTest extends PHPUnit_Framework_TestCase {
 
     public function _testPersonCreation() {
-        $person = new \Domain\General\Entities\Person();
+        $person = new Person();
         $person
             ->setFirstName('Hello')
             ->setLastName('World')
@@ -13,13 +16,13 @@ class ModelingTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testComposition() {
-        $person = new \Domain\General\Entities\Person();
+        $person = new Person();
         $person
             ->setFirstName('Hello')
             ->setLastName('World')
         ;
 
-        $user = new \Domain\General\Entities\User();
+        $user = new User();
 
         $user
             ->setUsername('usr')
