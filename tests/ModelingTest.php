@@ -1,6 +1,6 @@
 <?php
 
-class PersonTest extends PHPUnit_Framework_TestCase {
+class ModelingTest extends PHPUnit_Framework_TestCase {
 
     public function testPersonCreation() {
         $person = new \Domain\General\Person();
