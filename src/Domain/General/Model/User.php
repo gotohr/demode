@@ -2,6 +2,7 @@
 
 namespace Domain\General\Model;
 
+use Modeling\CollectionProperty;
 use Modeling\Entity;
 use Modeling\Property;
 
@@ -24,6 +25,7 @@ class User extends Entity {
                     ->setFqcn(Person::getFQCN())
                     ->setLazy(true)
             )
+            ->add(CollectionProperty::create('email'))
         ;
     }
 

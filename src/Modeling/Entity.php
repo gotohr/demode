@@ -29,7 +29,7 @@ abstract class Entity {
     }
 
     /**
-     * @return ArrayCollection
+     * @return Properties
      */
     protected function getProperties() {
         return $this->properties;
