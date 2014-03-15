@@ -14,7 +14,7 @@ class Properties {
      * @param Property $property
      * @return Properties
      */
-    public function addProperty(Property $property) {
+    public function add(Property $property) {
         $this->setProperty($property->getName(), $property);
         return $this;
     }
