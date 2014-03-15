@@ -1,1 +1,0 @@
-{"event":"suiteStart","suite":"ModelingTest","tests":1}{"event":"testStart","suite":"ModelingTest","test":"ModelingTest::testComposition"}{"event":"test","suite":"ModelingTest","test":"ModelingTest::testComposition","status":"pass","time":0.0032930374145508,"trace":[],"message":"","output":"usr:pwd (qwe asd)\n"}
