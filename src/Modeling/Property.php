@@ -84,6 +84,10 @@ class Property {
      * @return mixed
      */
     public function getValue() {
+        if ($this->lazy && !$this->value) {
+            $fqcn = $this->getFqcn();
+            $this->setValue(new $fqcn);
+        }
         return $this->value;
     }
 
