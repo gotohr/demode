@@ -11,6 +11,10 @@ abstract class Entity {
         $this->_build();
     }
 
+    public static function getFQCN() {
+        return get_called_class();
+    }
+
     abstract protected function _build();
 
     /**
