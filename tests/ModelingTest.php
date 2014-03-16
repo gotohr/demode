@@ -12,27 +12,37 @@ class ModelingTest extends PHPUnit_Framework_TestCase {
             ->setLastName('World')
         ;
 
-        echo "$person" . PHP_EOL;
+        $person2 = new Person();
+        $person2
+            ->setFirstName('qwe')
+            ->setLastName('asdasd')
+        ;
+
+        echo "$person2" . PHP_EOL;
     }
 
     public function testComposition() {
-        $person = new Person();
-        $person
-            ->setFirstName('Hello')
-            ->setLastName('World')
-        ;
+//        $person = new Person();
+//        $person
+//            ->setFirstName('Hello')
+//            ->setLastName('World')
+//        ;
 
-        $user = new User();
+        for ($i=0; $i<10000; $i++) {
+            $user = new User();
+            $user
+                ->setUsername("$i usr")
+                ->setPassword('pwd')
+                ->addEmail("$i ljubo@canic.com")
+                ->getPerson()
+                    ->setFirstName("qwe")
+                    ->setLastName("asd")
+                //->setPerson($person)
+            ;
+//            echo "$user" . PHP_EOL;
+        }
 
-        $user
-            ->setUsername('usr')
-            ->setPassword('pwd')
-            ->getPerson()
-                ->setFirstName("qwe")
-                ->setLastName("asd")
-            //->setPerson($person)
-        ;
-
-        echo "$user" . PHP_EOL;
+//        print_r($user->getEmail());
     }
+
 } 

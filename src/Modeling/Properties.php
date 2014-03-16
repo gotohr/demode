@@ -24,4 +24,19 @@ class Properties extends ArrayCollection {
         parent::set($name, $property);
         return $this;
     }
+
+    public function __clone() {
+        $collProps = $this->filter(function($item) {
+            return $item instanceof CollectionProperty;
+        });
+
+        /** @var CollectionProperty $prop */
+        foreach ($collProps as $prop) {
+            $this->set(
+                $prop->getName(),
+                CollectionProperty::create($prop->getName())
+                    ->setFqcn($prop->getFqcn())
+            );
+        }
+    }
 }

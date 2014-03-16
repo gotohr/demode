@@ -2,6 +2,7 @@
 
 namespace Domain\General\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Modeling\CollectionProperty;
 use Modeling\Entity;
 use Modeling\Property;
@@ -13,6 +14,8 @@ use Modeling\Property;
  * @method string getPassword()
  * @method \Domain\General\Model\User setPerson(Person $person)
  * @method \Domain\General\Model\Person getPerson()
+ * @method \Domain\General\Model\User addEmail($email)
+ * @method ArrayCollection getEmai()
  */
 class User extends Entity {
 

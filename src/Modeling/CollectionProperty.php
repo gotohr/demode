@@ -14,11 +14,9 @@ class CollectionProperty extends Property {
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getValue() {
         return $this->collection;
     }
-
-
-} 
+}
