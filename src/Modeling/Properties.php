@@ -16,7 +16,7 @@ class Properties extends ArrayCollection {
     }
 
     /**
-     * @param $name
+     * @param mixed $name
      * @param Property $property
      * @return Properties
      */

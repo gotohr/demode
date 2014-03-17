@@ -14,6 +14,13 @@ use Modeling\Property;
  */
 class Person extends Entity {
 
+    /**
+     * @return Person
+     */
+    public static function create() {
+        return new static();
+    }
+
     protected function _build() {
         $this->getProperties()
             ->add(Property::create('firstName'))

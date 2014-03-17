@@ -15,9 +15,16 @@ use Modeling\Property;
  * @method \Domain\General\Model\User setPerson(Person $person)
  * @method \Domain\General\Model\Person getPerson()
  * @method \Domain\General\Model\User addEmail($email)
- * @method ArrayCollection getEmai()
+ * @method ArrayCollection getEmail()
  */
 class User extends Entity {
+
+    /**
+     * @return User
+     */
+    public static function create() {
+        return new static();
+    }
 
     protected function _build() {
         $this->getProperties()

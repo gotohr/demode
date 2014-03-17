@@ -11,7 +11,6 @@ abstract class Entity {
     /** @var Properties */ protected $properties;
 
     public function __construct() {
-        $this->properties = new Properties();
         $this->__build();
     }
 
@@ -21,11 +20,13 @@ abstract class Entity {
 
     private function __build() {
         if (!isset(self::$_properties[$this->getFQCN()])) {
+            $this->properties = new Properties();
             $this->_build();
             self::$_properties[$this->getFQCN()] = clone ($this->properties);
         } else {
             $this->properties = clone (self::$_properties[$this->getFQCN()]);
         }
+
     }
 
     abstract protected function _build();
@@ -34,7 +35,7 @@ abstract class Entity {
      * @param Properties $properties
      * @return Entity
      */
-    protected function setProperties(Properties $properties) {
+    public function setProperties(Properties $properties) {
         $this->properties = $properties;
         return $this;
     }
@@ -42,7 +43,7 @@ abstract class Entity {
     /**
      * @return Properties
      */
-    protected function getProperties() {
+    public function getProperties() {
         return $this->properties;
     }
 
@@ -54,6 +55,7 @@ abstract class Entity {
      */
     public function __call($name, $args) {
         $propertyName = lcfirst(substr($name, 3));
+        /** @var Property $property */
         $property = $this->properties->get($propertyName);
         if (!$property) {
             throw new \Exception(static::getFQCN() . " has no $property defined.");
@@ -63,9 +65,11 @@ abstract class Entity {
             if ($prefix === 'get') {
                 return $property->getValue();
             } elseif ($prefix === 'set') {
+                $property->checkType($args[0]);
                 $property->setValue($args[0]);
                 return $this;
             } elseif ($prefix === 'add') {
+                $property->checkType($args[0]);
                 $property->getValue()->add($args[0]);
                 return $this;
             }

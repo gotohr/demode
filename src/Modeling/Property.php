@@ -73,6 +73,7 @@ class Property {
 
     /**
      * @param mixed $value
+     * @throws \Exception
      * @return Property
      */
     public function setValue($value) {
@@ -89,6 +90,23 @@ class Property {
             $this->setValue(new $fqcn);
         }
         return $this->value;
+    }
+
+    /**
+     * @param $value
+     * @throws \Exception
+     */
+    public function checkType($value) {
+        if ($value instanceof Entity) {
+            $fqcn = $value->getFqcn();
+            if ($fqcn && get_class($value) != $this->getFqcn()) {
+                throw new \Exception("$fqcn wrong type for {$this->getFqcn()}::$this field!");
+            }
+        }
+    }
+
+    public function __toString() {
+        return $this->getName();
     }
 
 } 
