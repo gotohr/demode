@@ -56,7 +56,13 @@ class ModelingTest extends PHPUnit_Framework_TestCase {
 
         echo "$group" . PHP_EOL;
 
-        print_r($group);
+        /** @var User $usr */
+        $usr = $group->getUser()->first();
+        echo $usr->getEmail()->first();
+
+//        print_r($group);
+
+
     }
 
 }

@@ -8,6 +8,7 @@ class Property {
     protected $value;
     protected $fqcn = null;
     protected $lazy = false;
+    protected $tags = array();
 
     public function __construct($name, $fqcn = null, $lazy = false) {
         $this->name = $name;
@@ -21,6 +22,14 @@ class Property {
      */
     public static function create($name) {
         return new static($name);
+    }
+
+    /**
+     * @param $tag
+     * @return bool
+     */
+    public function hasTag($tag) {
+        return in_array($tag, $this->tags);
     }
 
     /**
@@ -90,6 +99,15 @@ class Property {
             $this->setValue(new $fqcn);
         }
         return $this->value;
+    }
+
+    /**
+     * @param $tag
+     * @return Property
+     */
+    public function addTag($tag) {
+        $this->tags[] = $tag;
+        return $this;
     }
 
     /**

@@ -28,8 +28,8 @@ class User extends Entity {
 
     protected function _build() {
         $this->getProperties()
-            ->add(Property::create('username'))
-            ->add(Property::create('password'))
+            ->add(Property::create('username')->addTag('login'))
+            ->add(Property::create('password')->addTag('login'))
             ->add(
                 Property::create('person')
                     ->setFqcn(Person::getFQCN())

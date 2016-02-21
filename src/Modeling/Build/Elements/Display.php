@@ -1,15 +1,15 @@
 <?php
 
-namespace Modeling;
+namespace Modeling\Build\Elements;
 
-class Display {
+use Modeling\Build\Element;
 
-    /**
-     * @return Display
-     */
-    public static function create() {
-        return new self();
+class Display extends Element {
+
+    public function build() {
+        $this->createPath('display ' . $this->getName() . ' folder ');
     }
+
 
     /**
      * @return Display
