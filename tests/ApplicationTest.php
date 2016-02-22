@@ -61,7 +61,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
             $el->build();
         });
 
-        echo $app->describe();
+        echo $app->execute();
 
         // app displays login screen where we can enter login data (username and password)
         // login screen verifies data against service

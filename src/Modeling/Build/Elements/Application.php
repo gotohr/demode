@@ -2,11 +2,31 @@
 
 namespace Modeling\Build\Elements;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Modeling\Build\Builder;
 use Modeling\Build\Element;
 
 class Application extends Element {
 
-    /** @var BuildEnvironment */ protected $buildEnvironment;
+    /** @var BuildEnvironment   */ protected $buildEnvironment;
+    /** @var ArrayCollection    */ protected $tasks;
+
+    public function __construct() {
+        $this->tasks = new ArrayCollection();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTasks() {
+        return $this->tasks;
+    }
+
+    public function execute() {
+        $this->getTasks()->map(function ($task) {
+            $task();
+        });
+    }
 
     public function getApplication() {
         return $this;
@@ -47,9 +67,11 @@ class Application extends Element {
      * @return Application
      */
     public function build() {
-        $this->getBuildEnvironment()
-            ->getLogger()->info("BUILDING " . $this->getName());
-        $this->createPath('app root folder');
+        $this->getTasks()->add(function() {
+            $this->getBuildEnvironment()
+                ->getLogger()->info("BUILDING " . $this->getName());
+            $this->createPath('app root folder');
+        });
         return $this;
     }
 
