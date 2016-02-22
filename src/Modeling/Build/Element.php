@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cljubo
- * Date: 17.02.16.
- * Time: 19:38
- */
 
 namespace Modeling\Build;
 
@@ -25,7 +19,9 @@ class Element {
         if ($apply) $apply($this);
         $elements = $this->getElements();
         if ($elements) array_map(function (Element $element) use ($app, $apply) {
-            $app->getBuildEnvironment()->getLogger()->info(static::class . ' has ' . $element->getName());
+            $thisClass = array_pop(explode('\\', get_class($this)));
+            $elementClass = array_pop(explode('\\', get_class($element)));
+            $app->getBuildEnvironment()->getLogger()->info($thisClass . ' : ' . $this->getName() . " has $elementClass : " . $element->getName());
             $element
                 ->setApplication($app)
                 ->setContainer($this)
