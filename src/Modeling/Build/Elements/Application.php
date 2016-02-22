@@ -11,7 +11,8 @@ class Application extends Element {
     /** @var BuildEnvironment   */ protected $buildEnvironment;
     /** @var ArrayCollection    */ protected $tasks;
 
-    public function __construct() {
+    public function __construct($name = null) {
+        parent::__construct($name);
         $this->tasks = new ArrayCollection();
     }
 

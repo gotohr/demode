@@ -23,23 +23,22 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testApplicationCreation() {
-        $be = BuildEnvironment::create()
-            ->setName('test')
+        $be = BuildEnvironment::create('test')
             ->setLogger($this->getLogger())
             ->setPath('../target/')
         ;
 
-        $app = Application::create()->setName("testapp")
+        $app = Application::create('testapp')
             ->setBuildEnvironment($be)
             ->setElements(
-                Display::create()->setName('browser')
+                Display::create('browser')
                     ->setElements(
-                        $dashboard = View::create()->setName('dashboard'),
-                        View::create()->setName('users')
+                        $dashboard = View::create('dashboard'),
+                        View::create('users')
                             ->from(\Domain\General\Model\User::create())
                             ->useTag('list')
                             ->asTable(), //->withPagination(50)
-                        View::create()->setName('login')
+                        View::create('login')
                             ->from(\Domain\General\Model\User::create())
                             ->useTag('login')
                             ->asDataEntry()

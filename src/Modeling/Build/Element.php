@@ -15,6 +15,10 @@ class Element {
     /** @var Element            */ protected $container;
     /** @var ArrayCollection    */ protected $elements;
 
+    public function __construct($name = null) {
+        $this->setName($name);
+    }
+
     public function traverse(Application $app, \Closure $apply = null) {
         if ($apply) $apply($this);
         $elements = $this->getElements();
