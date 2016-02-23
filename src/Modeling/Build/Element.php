@@ -6,7 +6,7 @@ namespace Modeling\Build;
 use Doctrine\Common\Collections\ArrayCollection;
 use Modeling\Build\Elements\Application;
 
-class Element {
+abstract class Element {
     use StaticCreate;
 
     /** @var \SplFileInfo       */ protected $path;
@@ -129,5 +129,5 @@ class Element {
 
     }
 
-    public function build() {}
+    abstract public function build();
 }

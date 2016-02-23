@@ -30,6 +30,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
 
         $app = Application::create('testapp')
             ->setBuildEnvironment($be)
+            ->setBasedOn(\Modeling\Build\Artifact\Silex\Silex::create())
             ->setElements(
                 Display::create('browser')
                     ->setElements(
@@ -60,10 +61,11 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
             $el->build();
         });
 
-        echo $app->execute();
+        $app->getTasks()->add(function() use($app) {
+            $app->getBasedOn()->provisionApplication();
+        });
 
-        // app displays login screen where we can enter login data (username and password)
-        // login screen verifies data against service
+        echo $app->execute();
     }
 
 

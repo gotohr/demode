@@ -53,4 +53,5 @@ class BuildEnvironment extends Element {
         return rmdir($dir);
     }
 
+    public function build() {}
 }
