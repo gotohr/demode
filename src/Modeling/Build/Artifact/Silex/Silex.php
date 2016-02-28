@@ -5,6 +5,7 @@ namespace Modeling\Build\Artifact\Silex;
 
 use Modeling\Build\Artifact;
 use Modeling\Build\Elements\Application;
+use Modeling\Build\Elements\Display;
 use Modeling\Build\Elements\View;
 use Modeling\Build\StaticCreate;
 use Twig_Environment;
@@ -37,7 +38,7 @@ class Silex extends Artifact {
             && unzip $silex_zip \\
             && mv silex/* . && rm -rf silex \\
             && rm $silex_zip \\
-            && mkdir controllers
+            && mkdir includes
         ");
 //            && composer.phar install
 
@@ -46,22 +47,19 @@ class Silex extends Artifact {
 //      shell_exec("cd {$this->getPath()} && composer.phar require silex/silex \"~1.3\"");
     }
 
-    public function provision() {
+    public function provision($element) {
+        $fqcn = get_class($element);
+        $split = explode('\\', $fqcn);
+        $provisionName = array_pop($split);
+        $provisionFQCN = __NAMESPACE__ . '\\Provisions\\' . $provisionName;
+        $provision = (new $provisionFQCN)->setSilex($this);
+        $provision($element);
     }
 
-    public function provisionApplication() {
-        $this->getLogger()->info('Silex provisioning new web/index.php for Application: ' . $this->getApplication()->getName());
-        $content = $this->getTwig()->render('index.twig');
-        $filePath = $this->getApplication()->getPath() . '/web/index.php';
-        file_put_contents($filePath, $content);
-    }
-
-
-    public function provisionView(View $view) {
-        $this->getLogger()->info('Silex provisioning controller for View: ' . $view->getName());
-        $content = $this->getTwig()->render('view.twig', ['name' => $view->getName()]);
-        $filePath = $this->getApplication()->getPath() . "/controllers/{$view->getName()}.php";
-        file_put_contents($filePath, $content);
+    public function provisionFn($element) {
+        return function () use($element) {
+            $this->provision($element);
+        };
     }
 
 

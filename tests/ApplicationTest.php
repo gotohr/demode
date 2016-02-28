@@ -32,7 +32,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
             ->setBuildEnvironment($be)
             ->setBasedOn(\Modeling\Build\Artifact\Silex\Silex::create())
             ->setElements(
-                Display::create('browser')
+                Display::create('views')
                     ->setElements(
                         $dashboard = View::create('dashboard'),
                         View::create('users')
@@ -57,15 +57,15 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
             )
         ;
 
-        $app->traverse($app, function(Element $el) {
+        $app->traverse($app, function(Element $el) use ($app) {
             $el->build();
+            if (!($el instanceof Application)) {
+                $el->addProvisionTask();
+            }
         });
 
-        $app->getTasks()->add(function() use($app) {
-            $app->getBasedOn()->provisionApplication();
-        });
+        echo $app->addProvisionTask()->execute();
 
-        echo $app->execute();
     }
 
 

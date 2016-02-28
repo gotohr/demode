@@ -121,7 +121,7 @@ abstract class Element {
             .   $extension
         );
         if ($extension) {
-            $be->getLogger()->info('creating file ' . $this->getName());
+            $be->getLogger()->info('creating file ' . $this->getName(), [$this->getPath()]);
             touch($this->getPath());
         } else {
             $be->makeFolder($this->getPath(), $description);
@@ -130,4 +130,26 @@ abstract class Element {
     }
 
     abstract public function build();
+
+    /**
+     * @return static
+     */
+    public function addProvisionTask() {
+        $this->getApplication()->getTasks()->add(
+            $this->getApplication()->getBasedOn()->provisionFn($this)
+        );
+        return $this;
+    }
+
+    /**
+     * @param string $msg
+     * @param string $extension
+     * @return static
+     */
+    public function addCreatePathTask($msg, $extension = '') {
+        $this->getApplication()->getTasks()->add(function() use($msg, $extension) {
+            $this->createPath($msg, $extension);
+        });
+        return $this;
+    }
 }

@@ -7,9 +7,7 @@ use Modeling\Build\Element;
 class Display extends Element {
 
     public function build() {
-        $this->getApplication()->getTasks()->add(function() {
-            $this->createPath('display ' . $this->getName() . ' folder ');
-        });
+        $this->addCreatePathTask('display ' . $this->getName() . ' folder ');
     }
 
 

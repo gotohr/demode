@@ -3,6 +3,7 @@
 namespace Modeling\Build;
 
 use Modeling\Build\Elements\Application;
+use Modeling\Build\Elements\Display;
 use Modeling\Build\Elements\View;
 
 abstract class Artifact {
@@ -35,9 +36,8 @@ abstract class Artifact {
 
     abstract public function install();
 
-    abstract public function provision();
-    abstract public function provisionApplication();
-    abstract public function provisionView(View $view);
+    abstract public function provision($element);
+    abstract public function provisionFn($element);
 
     /**
      * @return \Twig_Environment

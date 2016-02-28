@@ -39,7 +39,7 @@ class Application extends Element {
      * @return Artifact
      */
     public function getBasedOn() {
-        return $this->basedOn;
+        return $this->basedOn ?: new Artifact\Dummy();
     }
 
     /**
@@ -84,13 +84,11 @@ class Application extends Element {
     }
 
     /**
-     * @return Application
+     * @return static
      */
     public function build() {
-        $this->getTasks()->add(function() {
-            $this->getBuildEnvironment()->getLogger()->info("BUILDING " . $this->getName());
-            $this->createPath('app root folder');
-        });
+        $this->getBuildEnvironment()->getLogger()->info("BUILDING " . $this->getName());
+        $this->addCreatePathTask('app root folder');
         $this->getTasks()->add($this->getBasedOn() ?: function() {});
         return $this;
     }

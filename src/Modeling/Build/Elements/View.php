@@ -11,15 +11,8 @@ class View extends Element {
     /** @var \Closure */ protected $from = null;
 
     public function build() {
-        $this->getApplication()->getTasks()->add(function() {
-            $this->createPath('view ' . $this->getName(), '.php');
-        });
-
+        $this->addCreatePathTask('view ' . $this->getName(), '.php');
         $this->getApplication()->getTasks()->add($this->from ?: function() {});
-
-        $this->getApplication()->getTasks()->add(function() {
-            $this->getApplication()->getBasedOn()->provisionView($this);
-        });
     }
 
     /**
