@@ -5,6 +5,7 @@ use Modeling\Build\Elements\Application;
 use Modeling\Build\Elements\BuildEnvironment;
 use Modeling\Build\Elements\Display;
 use Modeling\Build\Elements\View;
+use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -19,6 +20,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
             fclose($f);
         }
         $logger->pushHandler(new StreamHandler($logFilePath));
+        $logger->pushHandler(new ErrorLogHandler());
         return $logger;
     }
 
