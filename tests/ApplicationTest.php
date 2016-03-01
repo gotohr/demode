@@ -32,7 +32,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
 
         $app = Application::create('testapp')
             ->setBuildEnvironment($be)
-            ->setBasedOn(\Modeling\Build\Artifact\Silex\Silex::create())
+            ->setWith(\Modeling\Build\Artifact\Silex\Silex::create())
             ->setElements(
                 Display::create('views')
                     ->setElements(

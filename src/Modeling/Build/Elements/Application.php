@@ -10,7 +10,7 @@ use Modeling\Build\Element;
 class Application extends Element {
 
     /** @var BuildEnvironment   */ protected $buildEnvironment;
-    /** @var Artifact          */ protected $basedOn;
+    /** @var Artifact           */ protected $with;
     /** @var ArrayCollection    */ protected $tasks;
 
     public function __construct($name = null) {
@@ -38,17 +38,17 @@ class Application extends Element {
     /**
      * @return Artifact
      */
-    public function getBasedOn() {
-        return $this->basedOn ?: new Artifact\Dummy();
+    public function getWith() {
+        return $this->with ?: new Artifact\Dummy();
     }
 
     /**
-     * @param Artifact $basedOn
+     * @param Artifact $with
      * @return static
      */
-    public function setBasedOn($basedOn) {
-        $this->basedOn = $basedOn;
-        $this->basedOn->setApplication($this);
+    public function setWith($with) {
+        $this->with = $with;
+        $this->with->setApplication($this);
         return $this;
     }
 
@@ -89,7 +89,7 @@ class Application extends Element {
     public function build() {
         $this->getBuildEnvironment()->getLogger()->info("BUILDING " . $this->getName());
         $this->addCreatePathTask('app root folder');
-        $this->getTasks()->add($this->getBasedOn() ?: function() {});
+        $this->getTasks()->add($this->getWith() ?: function() {});
         return $this;
     }
 

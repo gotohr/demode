@@ -136,7 +136,7 @@ abstract class Element {
      */
     public function addProvisionTask() {
         $this->getApplication()->getTasks()->add(
-            $this->getApplication()->getBasedOn()->provisionFn($this)
+            $this->getApplication()->getWith()->provisionFn($this)
         );
         return $this;
     }
