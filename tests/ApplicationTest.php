@@ -61,12 +61,10 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
 
         $app->traverse($app, function(Element $el) use ($app) {
             $el->build();
-            if (!($el instanceof Application)) {
-                $el->addProvisionTask();
-            }
+            $el->addProvisionTask();
         });
 
-        echo $app->addProvisionTask()->execute();
+        echo $app->execute();
 
     }
 

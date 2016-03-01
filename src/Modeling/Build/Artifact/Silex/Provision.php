@@ -31,7 +31,7 @@ class Provision {
         $elClass = get_class($el);
         $silex->getLogger()->info("Silex provisioning. Applying resource tpl [$tpl] on [$elClass] named [{$el->getName()}]");
         $content = $silex->getTwig()->render("$tpl.twig", $work($this->getSilex(), $el));
-        $tp = $targetPath ?: "/includes/_{$el->getName()}.php";
+        $tp = $targetPath ?: "/includes/{$el->getName()}.php";
         $filePath = $silex->getApplication()->getPath() . $tp;
         file_put_contents($filePath, $content);
     }

@@ -11,16 +11,12 @@ class Dummy extends Artifact {
         // TODO: Implement install() method.
     }
 
-    public function provision() {
+    public function provision($element) {
         // TODO: Implement provision() method.
     }
 
-    public function provisionApplication() {
-        // TODO: Implement provisionApplication() method.
-    }
-
-    public function provisionView(View $view) {
-        // TODO: Implement provisionView() method.
+    public function provisionFn($element) {
+        return function() {};
     }
 
     public function getTwig() {
