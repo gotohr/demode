@@ -5,6 +5,7 @@ use Modeling\Build\Elements\Application;
 use Modeling\Build\Elements\BuildEnvironment;
 use Modeling\Build\Elements\Display;
 use Modeling\Build\Elements\View;
+use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -19,6 +20,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
             fclose($f);
         }
         $logger->pushHandler(new StreamHandler($logFilePath));
+        $logger->pushHandler(new ErrorLogHandler());
         return $logger;
     }
 
@@ -30,8 +32,9 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
 
         $app = Application::create('testapp')
             ->setBuildEnvironment($be)
+            ->setWith(\Modeling\Build\Artifact\Silex\Silex::create())
             ->setElements(
-                Display::create('browser')
+                Display::create('views')
                     ->setElements(
                         $dashboard = View::create('dashboard'),
                         View::create('users')
@@ -56,14 +59,13 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
             )
         ;
 
-        $app->traverse($app, function(Element $el) {
+        $app->traverse($app, function(Element $el) use ($app) {
             $el->build();
+            $el->addProvisionTask();
         });
 
         echo $app->execute();
 
-        // app displays login screen where we can enter login data (username and password)
-        // login screen verifies data against service
     }
 
 
