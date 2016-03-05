@@ -2,14 +2,38 @@
 
 namespace Modeling\Build;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Modeling\Build\Artifact\Provision;
 use Modeling\Build\Elements\Application;
-use Modeling\Build\Elements\Display;
-use Modeling\Build\Elements\View;
 
 abstract class Artifact {
     use StaticCreate;
 
-    /** @var Application */ protected $application;
+    protected $templater;
+    /** @var Application        */ protected $application;
+    /** @var ArrayCollection    */ protected $provisions;
+
+    public function __construct() {
+        $this->provisions = new ArrayCollection();
+        foreach (new \DirectoryIterator($this->getArtifactFolder() . '/Provisions') as $fileInfo) {
+            if($fileInfo->isDot()) continue;
+            $className = $fileInfo->getBasename('.php');
+            $fqcn = $this->getArtifactNamespace() . '\\Provisions\\' . $className;
+            $provision = new $fqcn;
+            $provision->setArtifact($this);
+            $this->provisions->set($className, $provision);
+        }
+    }
+
+    abstract public function getArtifactFolder();
+    abstract public function getArtifactNamespace();
+
+    public function getTemplater() {
+        if (!$this->templater) {
+            $this->templater = new \League\Plates\Engine(null, 'tpl');
+        }
+        return $this->templater;
+    }
 
     /**
      * @return Application
@@ -36,13 +60,23 @@ abstract class Artifact {
 
     abstract public function install();
 
-    abstract public function provision($element);
-    abstract public function provisionFn($element);
+    public function provision($element) {
+        $fqcn = get_class($element);
+        $split = explode('\\', $fqcn);
+        $provisionName = array_pop($split);
+        /** @var Provision $provision */
+        $provision = $this->provisions->get($provisionName);
+        if ($provision) {
+            $provision($element);
+        }
+    }
 
-    /**
-     * @return \Twig_Environment
-     */
-    abstract public function getTwig();
+    public function provisionFn($element) {
+        return function () use($element) {
+            $this->provision($element);
+        };
+    }
+
 
     public function __invoke() {
         $this->install();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modeling\Build\Artifact\Silex\Provisions;
+namespace Modeling\Build\Artifact\Bootstrap\Provisions;
 
 use Modeling\Build\Artifact;
 use Modeling\Build\Artifact\Provision;
@@ -10,10 +10,11 @@ class Display extends Provision {
 
     public function provision(DisplayElement $el) {
         $this->template(
-            'display', $el,
+            'layout', $el,
             function($artifact, DisplayElement $el) {
-                return ['name' => $el->getName()];
-            }
+                return [];
+            },
+            '/' . $el->getName() . '/layout.twig', ''
         );
     }
 
