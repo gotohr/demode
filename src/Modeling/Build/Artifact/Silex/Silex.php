@@ -13,17 +13,8 @@ use Twig_Loader_Filesystem;
 
 class Silex extends Artifact {
 
-    /** @var Twig_Environment */ protected $twig;
-
-    public function getTwig() {
-        if (!$this->twig) {
-            $loader = new Twig_Loader_Filesystem(__DIR__ . '/resources');
-            $this->twig = new Twig_Environment($loader, array(
-//                'cache' => '/path/to/compilation_cache',
-            ));
-        }
-        return $this->twig;
-    }
+    public function getArtifactFolder() { return __DIR__; }
+    public function getArtifactNamespace() { return __NAMESPACE__; }
 
     public function install() {
         $this->getLogger()->info("installing Silex from artefact");
@@ -46,21 +37,5 @@ class Silex extends Artifact {
 
 //      shell_exec("cd {$this->getPath()} && composer.phar require silex/silex \"~1.3\"");
     }
-
-    public function provision($element) {
-        $fqcn = get_class($element);
-        $split = explode('\\', $fqcn);
-        $provisionName = array_pop($split);
-        $provisionFQCN = __NAMESPACE__ . '\\Provisions\\' . $provisionName;
-        $provision = (new $provisionFQCN)->setSilex($this);
-        $provision($element);
-    }
-
-    public function provisionFn($element) {
-        return function () use($element) {
-            $this->provision($element);
-        };
-    }
-
 
 }

@@ -8,27 +8,25 @@ use Modeling\Property;
 
 class View extends Element {
 
-    /** @var \Closure */ protected $from = null;
+    /** @var Entity */ protected $entity = null;
 
     public function build() {
-        $this->addCreatePathTask('view ' . $this->getName(), '.php');
-        $this->getApplication()->getTasks()->add($this->from ?: function() {});
+//        $this->addCreatePathTask('view ' . $this->getName(), '.php');
+    }
+
+    /**
+     * @return Entity
+     */
+    public function getEntity() {
+        return $this->entity;
     }
 
     /**
      * @param Entity $entity
-     * @return View
+     * @return static
      */
-    public function from(Entity $entity) {
-        $this->from = function () use ($entity) {
-            $file = $this->getPath()->openFile('w');
-            $props = $entity->getProperties()->map(function (Property $prop) {
-                return $prop->getName();
-            });
-//            print_r();
-            $file->fwrite(implode(', ', $props->toArray()));
-            $file = null;
-        };
+    public function setEntity($entity) {
+        $this->entity = $entity;
         return $this;
     }
 

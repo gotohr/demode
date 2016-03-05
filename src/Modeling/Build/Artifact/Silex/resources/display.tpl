@@ -1,5 +1,3 @@
-<?php
-
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/../{{ name }}',
+    'twig.path' => __DIR__.'/../<?=$this->e($name)?>',
 ));

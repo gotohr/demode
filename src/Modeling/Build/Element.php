@@ -14,6 +14,7 @@ abstract class Element {
     /** @var Application        */ protected $application;
     /** @var Element            */ protected $container;
     /** @var ArrayCollection    */ protected $elements;
+    /** @var ArrayCollection    */ protected $with;
 
     public function __construct($name = null) {
         $this->setName($name);
@@ -33,6 +34,7 @@ abstract class Element {
         }, $elements->getValues());
     }
 
+    #region getters/setters
     /**
      * @return \SplFileInfo
      */
@@ -98,6 +100,13 @@ abstract class Element {
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getElements() {
+        return $this->elements;
+    }
+
+    /**
      * @return static
      */
     public function setElements() {
@@ -108,10 +117,19 @@ abstract class Element {
     /**
      * @return ArrayCollection
      */
-    public function getElements() {
-        return $this->elements;
+    public function getWith() {
+        return $this->with;
     }
 
+    /**
+     * @return static
+     */
+    public function setWith() {
+        $this->with = new ArrayCollection(func_get_args());
+        return $this;
+    }
+
+    #endregion
     public function createPath($description, $extension = '') {
         $be = $this->getApplication()->getBuildEnvironment();
         $this->setPath(
@@ -135,9 +153,9 @@ abstract class Element {
      * @return static
      */
     public function addProvisionTask() {
-        $this->getApplication()->getTasks()->add(
-            $this->getApplication()->getWith()->provisionFn($this)
-        );
+        foreach ($this->getApplication()->getWith()->getValues() as $with) {
+            $this->getApplication()->getTasks()->add($with->provisionFn($this));
+        }
         return $this;
     }
 
